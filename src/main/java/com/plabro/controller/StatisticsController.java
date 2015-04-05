@@ -32,7 +32,7 @@ public class StatisticsController extends HttpServlet {
 		 * required parameters were passed
 		 */
 		
-		Map<Long, Long> histogramStatistics = null;
+		Map<Integer, Integer> histogramStatistics = null;
 		
 		// serve all the content
 		if (dataStore.getSize() > 0) {
@@ -43,6 +43,7 @@ public class StatisticsController extends HttpServlet {
 		Gson gson = new Gson();
 		PrintWriter writer = response.getWriter();
 		writer.write(gson.toJson(histogramStatistics));
+		writer.close();
 	}
 
 //	private Date getDateFromHourAndDay(final String year, final String month,
@@ -70,7 +71,7 @@ interface Validator<T> {
 
 class IsPositiveIntegerValidator implements Validator<String> {
 	@Override
-	public boolean validate(final String input) {
+	public boolean validate(String input) {
 		boolean isInteger = false;
 		if ((null != input) && !input.isEmpty()) {
 			try {

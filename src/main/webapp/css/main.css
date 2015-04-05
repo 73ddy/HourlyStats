@@ -1,0 +1,11 @@
+@CHARSET "UTF-8";
+body {
+	margin:50px 0px; 
+	padding:0px;
+	text-align:center;
+}
+#data_canvas {
+	width:60%;
+	height:450px;
+	margin: 0 auto;
+}

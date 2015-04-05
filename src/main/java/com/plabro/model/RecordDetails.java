@@ -1,11 +1,11 @@
 package com.plabro.model;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.persistence.Entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.plabro.unstructured.model.Unstructured;
 
 @Entity
 public class RecordDetails implements Serializable {
@@ -15,28 +15,12 @@ public class RecordDetails implements Serializable {
 	@SerializedName("T")
 	private Double responseTime;
 	@SerializedName("Q")
-	private Map<String, String> query;
+	private Unstructured query;
 	@SerializedName("R")
-	private Map<String, String> response;
+	private Unstructured response;
 
 	public RecordDetails() {
 
-	}
-
-	public Map<String, String> getQuery() {
-		return query;
-	}
-
-	public void setQuery(Map<String, String> query) {
-		this.query = query;
-	}
-
-	public Map<String, String> getResponse() {
-		return response;
-	}
-
-	public void setResponse(Map<String, String> response) {
-		this.response = response;
 	}
 
 	public Double getResponseTimestamp() {
@@ -53,5 +37,21 @@ public class RecordDetails implements Serializable {
 
 	public void setResponseTime(Double responseTime) {
 		this.responseTime = responseTime;
+	}
+
+	public Unstructured getQuery() {
+		return query;
+	}
+
+	public void setQuery(Unstructured query) {
+		this.query = query;
+	}
+
+	public Unstructured getResponse() {
+		return response;
+	}
+
+	public void setResponse(Unstructured response) {
+		this.response = response;
 	}
 }

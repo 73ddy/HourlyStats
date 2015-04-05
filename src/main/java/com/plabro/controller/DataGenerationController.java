@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.plabro.dao.DataGeneratorThread;
+import com.plabro.dao.DataStore;
 
 public class DataGenerationController extends HttpServlet {
 	private static final long serialVersionUID = 7188253153405799472L;
@@ -21,17 +22,22 @@ public class DataGenerationController extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		DataStore.getInstance().flush();
 		// for more than one files, create a vector array of callables
 		final ExecutorService executor = Executors.newFixedThreadPool(1);
 		final Callable<Boolean> dataThread = new DataGeneratorThread(
 				RESOURCE_FILE_NAME);
+		final long startMillis = System.currentTimeMillis();
 		final Future<Boolean> dataThreadFuture = executor.submit(dataThread);
 
 		String responseMessage = null;
 
 		try {
 			if (dataThreadFuture.get()) {
-				responseMessage = "Data generation was successfully completed.";
+				responseMessage = new StringBuilder(
+						"Data generation was successfully completed in ")
+						.append(System.currentTimeMillis() - startMillis)
+						.append(" millis.").toString();
 			} else {
 				responseMessage = "Data generation process failed, please see logs for details.";
 			}
@@ -48,5 +54,6 @@ public class DataGenerationController extends HttpServlet {
 
 		PrintWriter out = response.getWriter();
 		out.write(responseMessage);
+		out.close();
 	}
 }

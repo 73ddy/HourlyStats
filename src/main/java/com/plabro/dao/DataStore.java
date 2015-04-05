@@ -36,7 +36,7 @@ public class DataStore {
 	 * Choice of DS: Mapped by hour in year. Usually this DS will be queried for
 	 * distribution over a given range of hours.
 	 */
-	private NavigableMap<Long, Long> queryFrequencyDistributionByHour = new ConcurrentSkipListMap<Long, Long>();
+	private NavigableMap<Integer, Integer> queryFrequencyDistributionByHour = new ConcurrentSkipListMap<Integer, Integer>();
 
 	public static DataStore getInstance() {
 		return instance;
@@ -76,27 +76,27 @@ public class DataStore {
 	}
 	
 	
-	public void addQueryFrquency(long hour) {
+	public void addQueryFrquency(int hour) {
 		if (queryFrequencyDistributionByHour.containsKey(hour)) {
 			queryFrequencyDistributionByHour.put(hour, queryFrequencyDistributionByHour.get(hour) + 1);
 		} else {
-			queryFrequencyDistributionByHour.put(hour, 1L);
+			queryFrequencyDistributionByHour.put(hour, 1);
 		}
 	}
 	
-	public SortedMap<Long, Long> getTrailDistribution(long hour) {
+	public SortedMap<Integer, Integer> getTrailDistribution(int hour) {
 		return queryFrequencyDistributionByHour.tailMap(hour);
 	}
 	
-	public SortedMap<Long, Long> getHeadDistribution(long hour) {
+	public SortedMap<Integer, Integer> getHeadDistribution(int hour) {
 		return queryFrequencyDistributionByHour.headMap(hour);
 	}
 	
-	public SortedMap<Long, Long> getSubsetDistribution(long minHour, long maxHour) {
+	public SortedMap<Integer, Integer> getSubsetDistribution(int minHour, int maxHour) {
 		return queryFrequencyDistributionByHour.subMap(minHour, maxHour);
 	}
 	
-	public Map<Long, Long> getAllDistributions() {
+	public Map<Integer, Integer> getAllDistributions() {
 		return Collections.unmodifiableMap(queryFrequencyDistributionByHour);
 	}
 	
