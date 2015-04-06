@@ -1,6 +1,7 @@
 package com.plabro.unstructured.model;
 
-import com.sun.javafx.collections.MappingChange.Map;
+import java.util.Map;
+
 
 /**
  * This class represents any unstructured json which may or may not be a json.
