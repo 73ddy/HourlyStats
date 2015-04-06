@@ -9,7 +9,9 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -30,13 +32,18 @@ public class DataGeneratorThread implements Callable<Boolean> {
 	private static final DateFormat dateFormater = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss,SSS");
 	// must be calculated by the Timezone difference from GMT ofthe server which is generating logs.
-	private static long TIMESTAMP_CORRECTION = 19800000;
+	private final static long TIMESTAMP_CORRECTION;
 	private static final DataStore dataStore = DataStore.getInstance();
 
 	private String resourceFileName;
 
 	public DataGeneratorThread(final String resourceFileName) {
 		this.resourceFileName = resourceFileName;
+	}
+	
+	static {
+		TimeZone tz = Calendar.getInstance().getTimeZone();
+		TIMESTAMP_CORRECTION = tz.getRawOffset();
 	}
 
 	@Override
