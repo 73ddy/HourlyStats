@@ -65,7 +65,7 @@ public class DataGeneratorThread implements Callable<Boolean> {
 	 */
 	private void populateData() throws ParseException, IOException {
 		Gson gson;
-		final InputStream inputStream = Record.class
+		final InputStream inputStream = Record.class.getClassLoader()
 				.getResourceAsStream(resourceFileName);
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(
 				inputStream));
